@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import api from '../api/axios';
 
 interface Producto {
   id: string;
@@ -96,40 +97,90 @@ export const useProductStore = create<ProductState>()(
       error: null,
 
       fetchProductos: async () => {
-        // En persistencia, el estado se carga automáticamente
+        set({ isLoading: true, error: null });
+        try {
+          const { data } = await api.get('/productos/dashboard');
+          // Map backend ProductoDetalleDto to frontend Producto
+          const mapped = data.productos.map((p: any) => ({
+            id: p.id.toString(),
+            nombre: p.nombre,
+            descripcion: p.categoria?.nombre || 'Sin categoría',
+            precio: p.precio,
+            stock: p.inventario?.stock || 0,
+            imagen: p.imagen || 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800'
+          }));
+          set({ productos: mapped, isLoading: false });
+        } catch (error: any) {
+          set({ error: 'Error al cargar productos', isLoading: false });
+        }
       },
 
       createProducto: async (producto) => {
         set({ isLoading: true, error: null });
         try {
-          const nuevo = { 
-            ...producto, 
-            id: Math.random().toString(36).substr(2, 9),
-            imagen: producto.imagen || 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800'
-          } as Producto;
-          set((state) => ({ 
-            productos: [nuevo, ...state.productos], 
-            isLoading: false 
+          const payload = {
+            nombre: producto.nombre,
+            precio: producto.precio,
+            categoriaId: 1, // Default category for now
+            imagen: producto.imagen,
+            stock: producto.stock
+          };
+          await api.post('/productos', payload);
+          // Refresh list to get updated data with relations
+          const { data } = await api.get('/productos/dashboard');
+          const mapped = data.productos.map((p: any) => ({
+            id: p.id.toString(),
+            nombre: p.nombre,
+            descripcion: p.categoria?.nombre || 'Sin categoría',
+            precio: p.precio,
+            stock: p.inventario?.stock || 0,
+            imagen: p.imagen || 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800'
           }));
+          set({ productos: mapped, isLoading: false });
         } catch (error: any) {
-          set({ error: 'Error al crear', isLoading: false });
+          set({ error: 'Error al crear producto', isLoading: false });
+          throw error;
         }
       },
 
       updateProducto: async (id, producto) => {
-        set({ isLoading: true });
-        set((state) => ({
-          productos: state.productos.map((p) => (p.id === id ? { ...p, ...producto } : p)),
-          isLoading: false,
-        }));
+        set({ isLoading: true, error: null });
+        try {
+          await api.patch(`/productos/${id}`, {
+            nombre: producto.nombre,
+            precio: producto.precio,
+            imagen: producto.imagen,
+            stock: producto.stock
+          });
+          // Refresh list
+          const { data } = await api.get('/productos/dashboard');
+          const mapped = data.productos.map((p: any) => ({
+            id: p.id.toString(),
+            nombre: p.nombre,
+            descripcion: p.categoria?.nombre || 'Sin categoría',
+            precio: p.precio,
+            stock: p.inventario?.stock || 0,
+            imagen: p.imagen || 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800'
+          }));
+          set({ productos: mapped, isLoading: false });
+        } catch (error: any) {
+          set({ error: 'Error al actualizar producto', isLoading: false });
+          throw error;
+        }
       },
 
       deleteProducto: async (id) => {
-        set({ isLoading: true });
-        set((state) => ({
-          productos: state.productos.filter((p) => p.id !== id),
-          isLoading: false,
-        }));
+        set({ isLoading: true, error: null });
+        try {
+          await api.delete(`/productos/${id}`);
+          set((state) => ({
+            productos: state.productos.filter((p) => p.id !== id),
+            isLoading: false,
+          }));
+        } catch (error: any) {
+          set({ error: 'Error al eliminar producto', isLoading: false });
+          throw error;
+        }
       },
     }),
     {
