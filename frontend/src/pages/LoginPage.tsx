@@ -103,7 +103,7 @@ export const LoginPage = () => {
              <div className="h-px w-full bg-white/5" />
              <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20 text-blue-300 text-xs text-center">
                 <p>Usa las credenciales de prueba:</p>
-                <p className="font-mono mt-1">admin@admin.com / admin123</p>
+                <p className="font-mono mt-1">admin@email.com / admin123</p>
              </div>
             <p className="text-slate-400">
               ¿No tienes cuenta?{' '}
