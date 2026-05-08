@@ -16,7 +16,7 @@ interface AuthState {
   isHydrated: boolean;
   error: string | null;
   login: (credentials: { email: string; password: string }) => Promise<void>;
-  register: (data: any) => Promise<void>;
+  register: (data: unknown) => Promise<void>;
   logout: () => void;
   checkAuth: () => Promise<void>;
   setHydrated: () => void;
@@ -43,8 +43,8 @@ export const useAuthStore = create<AuthState>()(
             isAuthenticated: true, 
             isLoading: false 
           });
-        } catch (error: any) {
-          const message = error.response?.data?.message || 'Error de conexión con el servidor';
+        } catch (error: unknown) {
+          const message = (error as { response?: { data?: { message?: string } } }).response?.data?.message || 'Error de conexión con el servidor';
           set({ 
             error: message, 
             isLoading: false 
@@ -58,9 +58,9 @@ export const useAuthStore = create<AuthState>()(
         try {
           await api.post('/auth/register', data);
           set({ isLoading: false });
-        } catch (error: any) {
+        } catch (error: unknown) {
           set({ 
-            error: error.response?.data?.message || 'Error al registrarse', 
+            error: (error as { response?: { data?: { message?: string } } }).response?.data?.message || 'Error al registrarse', 
             isLoading: false 
           });
           throw error;
@@ -81,7 +81,7 @@ export const useAuthStore = create<AuthState>()(
           // We need a profile endpoint to check if cookie is valid
           const { data } = await api.get('/usuarios/profile');
           set({ user: data, isAuthenticated: true });
-        } catch (error) {
+        } catch {
           set({ isAuthenticated: false, user: null });
         }
       },

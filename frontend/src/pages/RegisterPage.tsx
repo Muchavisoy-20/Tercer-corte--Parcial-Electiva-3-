@@ -21,8 +21,8 @@ export const RegisterPage = () => {
       await register({ username, email, password });
       toast.success('Registro exitoso. Ahora puedes iniciar sesión.');
       navigate('/login');
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Error al registrarse');
+    } catch (error: unknown) {
+      toast.error((error as { response?: { data?: { message?: string } } }).response?.data?.message || 'Error al registrarse');
     }
   };
 

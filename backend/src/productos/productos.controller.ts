@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ProductosService } from './productos.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -6,13 +7,16 @@ import { ProductoFullResponseDto } from './dto/producto-full.dto';
 
 @ApiTags('productos')
 @Controller('productos')
+@UseGuards(JwtAuthGuard)
 export class ProductosController {
     constructor(private readonly productosService: ProductosService) { }
+    
+    @ApiOperation({ summary: 'Obtener métricas de salud del inventario' })
+    @Get('health')
+    async getHealthMetrics() {
+        return await this.productosService.getHealthMetrics();
+    }
 
-    // @Get()
-    // async findAll() {
-    //     return await this.productosService.findAll();
-    // }
 
     @ApiOperation({ summary: 'Crear un nuevo producto' })
     @ApiOkResponse({ type: Object })
@@ -21,26 +25,14 @@ export class ProductosController {
         return await this.productosService.create(createProductDto);
     }
 
-    @ApiOperation({ summary: 'Listar productos con categoría e inventario y reglas de negocio' })
-    @ApiOkResponse({ type: ProductoFullResponseDto })
-    @Get('dashboard')
-    async findProductosConCategoriaEInventario() {
-        return await this.productosService.findProductosConCategoriaEInventario();
-    }
 
-    @ApiOperation({ summary: 'Misma consulta que dashboard, pero refactor usando funciones privadas' })
-    @ApiOkResponse({ type: ProductoFullResponseDto })
-    @Get('dashboard-refactor')
-    async findProductosConCategoriaEInventarioRefactor() {
-        return await this.productosService.findProductosConCategoriaEInventarioRefactor();
-    }
 
     @Get('pagination')
-    async findWhitPagination(
+    async findWithPagination(
         @Query('page') page: string = '1',
         @Query('limit') limit: string = '10',
     ) {
-        return await this.productosService.findWhitPagination(+page, +limit);
+        return await this.productosService.findWithPagination(+page, +limit);
     }
 
     @Get('search')

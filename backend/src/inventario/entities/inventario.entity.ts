@@ -9,7 +9,11 @@ export class InventarioEntity {
   @Column({ type: 'int', default: 0 })
   stock: number;
 
-  @Column({ type: 'varchar', length: 100, default: 'principal' })
+  @Column({
+    type: 'enum',
+    enum: ['Bodega A', 'Vitrina', 'Estante'],
+    default: 'Bodega A',
+  })
   ubicacion: string;
 
   @Column({ type: 'int', default: 0 })

@@ -16,10 +16,13 @@ import { AuthModule } from './auth/auth.module';
 import { UserEntity } from './usuarios/entities/usuario.entity';
 import { RoleEntity } from './modules/rol/entities/role.entitity';
 import { SeedService } from './seed.service';
+import { CategoriaEntity } from './categoria/entities/categoria.entity';
+import { InventarioEntity } from './inventario/entities/inventario.entity';
+import { InventarioLogEntity } from './inventario/entities/inventario-log.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ProductoEntity, UserEntity, RoleEntity]),
+    TypeOrmModule.forFeature([ProductoEntity, UserEntity, RoleEntity, CategoriaEntity, InventarioEntity, InventarioLogEntity]),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',

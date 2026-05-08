@@ -1,27 +1,41 @@
-# AdminPanel - Gestión de Inventario
+# AdminPanel - Gestión de Inventario (Final)
 
-Un sistema administrativo premium para la gestión de inventario, productos y usuarios, desarrollado con **React 19**, **TypeScript**, **Vite**, **NestJS** y **MySQL**.
+Este proyecto ha evolucionado de un gestor de tareas básico a un robusto **Sistema de Gestión de Inventario (SGI)** diseñado para el control total de existencias, métricas de negocio y salud operativa.
 
-## 🎮 Descripción
-El proyecto consiste en una plataforma robusta que permite a los administradores gestionar un catálogo de productos, controlar el inventario y administrar cuentas de usuario. Cuenta con una interfaz moderna con animaciones fluidas y un sistema de autenticación seguro basado en JWT.
+## 🚀 Justificación de la Arquitectura
 
-## 🚀 Características Principales
-✅ **Autenticación Segura**: Sistema de Login y Registro con validación de datos y protección de rutas.
-✅ **Gestión de Productos**: CRUD completo de productos con carga de imágenes y categorización.
-✅ **Dashboard Estadístico**: Panel de control con métricas clave del inventario.
-✅ **Diseño Premium**: Interfaz oscura con efectos de "Glassmorphism" y degradados modernos.
-✅ **Persistencia de Datos**: Almacenamiento seguro en MySQL y gestión de sesión persistente con Zustand.
-✅ **Notificaciones en Tiempo Real**: Sistema de alertas visuales con Sonner.
+### Migración: MongoDB/Express → MySQL/NestJS
+La migración fue fundamental para garantizar la **integridad de los datos** y la **escalabilidad** del sistema:
+- **Integridad Referencial**: El uso de MySQL permite definir relaciones estrictas entre Productos, Categorías e Inventario, evitando datos huérfanos.
+- **Escalabilidad con NestJS**: Su arquitectura modular facilita el crecimiento del proyecto y la inyección de dependencias.
+- **Seguridad Robusta**: Implementación de JWT con Guards para proteger endpoints críticos.
+- **Métricas BI**: El motor relacional permite realizar cálculos complejos de salud del stock en tiempo real.
 
-## 📋 Requisitos Técnicos Cumplidos
-✅ **Vite**: Base del proyecto frontend para un desarrollo ultrarrápido.
-✅ **NestJS**: Backend escalable y modular con arquitectura de controladores y servicios.
-✅ **TypeORM**: Gestión de base de datos MySQL con sincronización automática.
-✅ **Zustand**: Manejo de estado global para la autenticación y el usuario.
-✅ **Tailwind CSS 4.0**: Estilos de última generación sin configuración pesada.
-✅ **Framer Motion**: Micro-interacciones y animaciones de entrada.
-✅ **React Router v7**: Navegación de una sola página (SPA) fluida.
-✅ **Seeding Automático**: Carga de datos de prueba al iniciar el servidor por primera vez.
+## 🎯 Objetivos del Sistema
+- **Control de Stock Crítico**: Visualización inmediata de productos con existencias bajas o agotadas.
+- **Gestión de Categorías**: Organización lógica del catálogo con CRUD dedicado.
+- **Logs de Actividad**: Registro automático de entradas, ajustes manuales y cambios de precio.
+- **Acceso Exclusivo**: El sistema es exclusivo para el rol **Admin** en esta etapa.
+
+## 🌟 Características Destacadas
+✅ **Dashboard BI**: Métricas de salud, gráfico de distribución y lista de alertas de stock.
+✅ **Gestión Avanzada**: CRUD de productos y categorías con validaciones en tiempo real.
+✅ **Paginación Inteligente**: Control de visualización con selector de filas (10/20).
+✅ **Diseño Premium**: Interfaz oscura con animaciones de Framer Motion y efectos glass.
+✅ **Seguridad**: Rutas protegidas y registro de actividad Morgan en el backend.
+
+## 📋 Requerimientos de Usuario (Historias de Usuario)
+
+### Épica 1: Gestión de Existencias (Inventory Health)
+- **HU 1**: Como Admin, quiero ver un dashboard con el valor total del inventario y alertas de stock bajo para tomar decisiones de compra.
+- **HU 2**: Como Admin, quiero visualizar la distribución de mis productos por categoría mediante gráficos interactivos.
+
+### Épica 2: Control de Catálogo
+- **HU 3**: Como Admin, quiero crear, editar y eliminar categorías para organizar mejor mis productos.
+- **HU 4**: Como Admin, quiero filtrar productos por categoría y buscarlos por nombre en una tabla paginada.
+
+### Épica 3: Trazabilidad y Auditoría
+- **HU 5**: Como Admin, quiero un registro (log) automático cada vez que el stock o el precio de un producto cambie para auditar ajustes manuales.
 
 ## 📁 Estructura del Proyecto
 ```text
@@ -45,35 +59,59 @@ Parcial-Electiva/
 └── README.md
 ```
 
-## 🛠️ Instalación
-1. Clonar el repositorio.
-2. Configurar el servidor MySQL (XAMPP recomendado).
-3. Instalar dependencias en ambas carpetas:
+## 🛠️ Instalación y Configuración para Estudiantes
+
+Sigue estos pasos para correr el proyecto localmente sin errores:
+
+### 1. Requisitos Previos
+- **Node.js** (v18 o superior)
+- **MySQL/MariaDB** (Se recomienda **XAMPP** o **MySQL Installer**)
+
+### 2. Configuración de Base de Datos
+1. Inicia el servicio de MySQL en tu panel de XAMPP.
+2. Crea una base de datos vacía llamada `tienda_virtual` (puedes hacerlo desde phpMyAdmin).
+   *Nota: El sistema creará las tablas y datos de prueba automáticamente al iniciar el backend por primera vez.*
+
+### 3. Configuración de Variables de Entorno
+Debes crear los archivos `.env` basados en los ejemplos proporcionados:
+
+**En la carpeta `backend/`:**
+1. Copia `.env.example` y cámbiale el nombre a `.env`.
+2. Asegúrate de que los valores de `DB_USERNAME`, `DB_PASSWORD` y `DB_PORT` coincidan con tu configuración local (XAMPP por defecto usa `root`, contraseña vacía y puerto `3306`).
+
+**En la carpeta `frontend/`:**
+1. Copia `.env.example` y cámbiale el nombre a `.env`.
+
+### 4. Instalación de Dependencias
+Abre dos terminales y ejecuta lo siguiente:
+
 ```bash
-# En la carpeta backend
+# Terminal 1 (Backend)
+cd backend
 npm install
 
-# En la carpeta frontend
+# Terminal 2 (Frontend)
+cd frontend
 npm install
 ```
 
-## 🎯 Cómo Ejecutar
-### Modo Desarrollo
-Para que el sistema funcione, ambos servidores deben estar corriendo:
+## 🎯 Ejecución del Proyecto
 
-**Backend:**
+Para que el sistema funcione, ambos servidores deben estar activos:
+
+**Servidor Backend (NestJS):**
 ```bash
 cd backend
 npm run start:dev
 ```
-*Abre [http://localhost:8080/api](http://localhost:8080/api) para ver el servidor.*
+*El servidor estará disponible en [http://localhost:8080](http://localhost:8080). Podrás ver la documentación de la API en [http://localhost:8080/api-docs](http://localhost:8080/api-docs).*
 
-**Frontend:**
+**Cliente Frontend (React/Vite):**
 ```bash
 cd frontend
 npm run dev
 ```
-*Abre [http://localhost:5173/](http://localhost:5173/) en tu navegador.*
+*Abre [http://localhost:5173/](http://localhost:5173/) para usar la aplicación.*
 
 ## 📖 Flujo de Uso
 1. **Inicio**: El sistema te redirige automáticamente al `/login`.

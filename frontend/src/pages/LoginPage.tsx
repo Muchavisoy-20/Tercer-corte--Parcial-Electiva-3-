@@ -31,9 +31,9 @@ export const LoginPage = () => {
         navigate('/dashboard');
       }, 500);
       
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error en el componente de Login:', error);
-      toast.error(error.message || 'Credenciales incorrectas o error de servidor');
+      toast.error((error as Error).message || 'Credenciales incorrectas o error de servidor');
     }
   };
 

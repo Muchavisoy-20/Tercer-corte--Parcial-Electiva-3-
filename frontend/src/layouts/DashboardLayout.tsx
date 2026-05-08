@@ -18,10 +18,10 @@ export const DashboardLayout = () => {
       {/* Sidebar for desktop */}
       <aside className="fixed left-0 top-0 hidden h-screen w-64 border-r bg-card lg:block">
         <div className="flex h-full flex-col p-6">
-          <div className="flex items-center gap-2 mb-10">
+          <Link to="/" className="flex items-center gap-2 mb-10 hover:opacity-80 transition-opacity">
             <div className="h-8 w-8 rounded-lg premium-gradient" />
             <span className="text-xl font-bold">AdminPanel</span>
-          </div>
+          </Link>
 
           <nav className="flex-1 space-y-2">
             <Link to="/dashboard">
@@ -34,6 +34,12 @@ export const DashboardLayout = () => {
               <Button variant="ghost" className="w-full justify-start gap-3">
                 <ShoppingBag className="h-5 w-5" />
                 Productos
+              </Button>
+            </Link>
+            <Link to="/categories">
+              <Button variant="ghost" className="w-full justify-start gap-3">
+                <LayoutDashboard className="h-5 w-5" />
+                Categorías
               </Button>
             </Link>
           </nav>
@@ -59,7 +65,9 @@ export const DashboardLayout = () => {
       {/* Main content */}
       <main className="lg:pl-64">
         <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b bg-background/80 px-6 backdrop-blur-md">
-          <h1 className="text-lg font-semibold lg:hidden">AdminPanel</h1>
+          <Link to="/" className="lg:hidden">
+            <h1 className="text-lg font-semibold">AdminPanel</h1>
+          </Link>
           <div className="flex-1" />
           <div className="flex items-center gap-4">
             <ThemeToggle />
