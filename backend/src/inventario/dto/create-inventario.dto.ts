@@ -1,4 +1,4 @@
 export class CreateInventarioDto {
-    name: string;
-    precio: number;
+  name: string;
+  precio: number;
 }

@@ -1,10 +1,10 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty } from 'class-validator';
 
 export class RegisterDto {
-    @IsNotEmpty()
-    username: string;
-    @IsNotEmpty()
-    email: string;
-    @IsNotEmpty()
-    password: string;
+  @IsNotEmpty()
+  username: string;
+  @IsNotEmpty()
+  email: string;
+  @IsNotEmpty()
+  password: string;
 }

@@ -14,9 +14,12 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(@Body() dto: LoginDto, @Res({ passthrough: true }) response: Response) {
+  async login(
+    @Body() dto: LoginDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     const result = await this.authService.login(dto);
-    
+
     response.cookie('access_token', result.access_token, {
       httpOnly: true,
       secure: false, // Set to true in production with HTTPS
@@ -26,7 +29,7 @@ export class AuthController {
 
     return {
       message: 'Login successful',
-      user: result.user
+      user: result.user,
     };
   }
 

@@ -14,10 +14,10 @@ export const LandingPage = () => {
           <div className="h-12 w-12 rounded-2xl premium-gradient flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
             <Package className="text-white h-6 w-6" />
           </div>
-          <span className="text-2xl font-black tracking-tighter uppercase group-hover:text-blue-400 transition-colors">AdminPanel</span>
+          <span className="text-2xl font-black tracking-tighter uppercase group-hover:text-blue-400 transition-colors">Gestión de Inventario</span>
         </div>
-        <Button 
-          variant="secondary" 
+        <Button
+          variant="secondary"
           onClick={() => navigate('/login')}
           className="rounded-xl px-6 font-bold hover:bg-white hover:text-black transition-all"
         >
@@ -28,19 +28,21 @@ export const LandingPage = () => {
       {/* Hero Section */}
       <main className="container mx-auto px-6 pt-20 pb-32 relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/10 blur-[120px] rounded-full -z-0" />
-        
+
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-6xl md:text-8xl font-black tracking-tight leading-[0.9] mb-8 uppercase">
-              Gestión de <span className="text-transparent bg-clip-text premium-gradient">Inventario</span> Profesional
+            <h1 className="text-6xl md:text-8xl font-black tracking-tight leading-[1.1] mb-8 uppercase flex flex-col items-center">
+              <span>Gestión de</span>
+              <span className="bg-blue-600 px-8 py-2 my-2 inline-block shadow-2xl shadow-blue-500/50">Inventario</span>
+              <span>Profesional</span>
             </h1>
           </motion.div>
 
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -55,15 +57,15 @@ export const LandingPage = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               onClick={() => navigate('/login')}
               className="h-16 px-10 text-lg font-bold premium-gradient rounded-2xl shadow-xl shadow-blue-600/20 hover:scale-105 active:scale-95 transition-all gap-3"
             >
               Comenzar Ahora <ArrowRight className="h-6 w-6" />
             </Button>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="lg"
               className="h-16 px-10 text-lg font-bold rounded-2xl border-white/10 bg-white/5 hover:bg-white/10 transition-all"
             >
@@ -74,17 +76,17 @@ export const LandingPage = () => {
 
         {/* Features */}
         <div className="grid md:grid-cols-3 gap-8 mt-40">
-          <FeatureCard 
+          <FeatureCard
             icon={<ShieldCheck className="h-8 w-8 text-blue-500" />}
             title="Seguridad JWT"
             description="Protección de datos y control de acceso basado en roles para tu total tranquilidad."
           />
-          <FeatureCard 
+          <FeatureCard
             icon={<BarChart3 className="h-8 w-8 text-purple-500" />}
             title="Métricas de Negocio"
             description="Visualiza la salud de tu stock con KPIs precisos y gráficos dinámicos."
           />
-          <FeatureCard 
+          <FeatureCard
             icon={<Package className="h-8 w-8 text-emerald-500" />}
             title="Escalabilidad"
             description="Arquitectura NestJS diseñada para crecer junto a tu catálogo de productos."
@@ -93,14 +95,14 @@ export const LandingPage = () => {
       </main>
 
       <footer className="border-t border-white/5 py-12 text-center text-slate-500 text-sm">
-        <p>© 2026 AdminPanel Inventory Management System. Todos los derechos reservados.</p>
+        <p>© 2026 Gestión de Inventario - SGI. Todos los derechos reservados.</p>
       </footer>
     </div>
   );
 };
 
 const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => (
-  <motion.div 
+  <motion.div
     whileHover={{ y: -10 }}
     className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-blue-500/30 transition-all"
   >

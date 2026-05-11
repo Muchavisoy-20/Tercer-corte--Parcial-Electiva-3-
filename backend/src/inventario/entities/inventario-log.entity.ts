@@ -1,27 +1,34 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { ProductoEntity } from "src/productos/entities/producto.entity";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { ProductoEntity } from 'src/productos/entities/producto.entity';
 
 @Entity({ name: 'inventario_logs' })
 export class InventarioLogEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ type: 'varchar', length: 50 })
-    tipo: 'ENTRADA' | 'SALIDA' | 'AJUSTE' | 'PRECIO';
+  @Column({ type: 'varchar', length: 50 })
+  tipo: 'ENTRADA' | 'SALIDA' | 'AJUSTE' | 'PRECIO';
 
-    @Column({ type: 'int' })
-    cantidad: number;
+  @Column({ type: 'int' })
+  cantidad: number;
 
-    @Column({ type: 'varchar', length: 255 })
-    motivo: string;
+  @Column({ type: 'varchar', length: 255 })
+  motivo: string;
 
-    @CreateDateColumn({ type: 'timestamp' })
-    fecha: Date;
+  @CreateDateColumn({ type: 'timestamp' })
+  fecha: Date;
 
-    @ManyToOne(() => ProductoEntity)
-    @JoinColumn({ name: 'producto_id' })
-    producto: ProductoEntity;
+  @ManyToOne(() => ProductoEntity)
+  @JoinColumn({ name: 'producto_id' })
+  producto: ProductoEntity;
 
-    @Column({ name: 'producto_id' })
-    productoId: number;
+  @Column({ name: 'producto_id' })
+  productoId: number;
 }

@@ -8,49 +8,49 @@ import { RoleEnum } from 'src/common/enums/role.enum';
 
 @Injectable()
 export class AuthService {
-    constructor(
-        @Inject(forwardRef(() => UsuariosService))
-        private readonly usuariosService: UsuariosService,
-        private readonly jwtService: JwtService,
-    ) { }
+  constructor(
+    @Inject(forwardRef(() => UsuariosService))
+    private readonly usuariosService: UsuariosService,
+    private readonly jwtService: JwtService,
+  ) {}
 
-    async register(dto: RegisterDto) {
-        const passwordHash = await bcrypt.hash(dto.password, 10);
-        
-        const user = await this.usuariosService.createUser(
-            {
-                username: dto.username,
-                email: dto.email,
-                passwordHash,
-                roleName: RoleEnum.USER
-            }
-        )
-        const payload =
-        {
-            sub: user.id,
-            username: user.username,
-            role: user.role.name
-        };
-        return {
-            access_token: this.jwtService.sign(payload)
-        }
-    }
+  async register(dto: RegisterDto) {
+    const passwordHash = await bcrypt.hash(dto.password, 10);
 
-    async login(dto: LoginDto) {
-        const user = await this.usuariosService.validateCredentials(dto.email, dto.password);
-        const payload = {
-            sub: user.id,
-            username: user.username,
-            role: user.role.name
-        };
-        return {
-            access_token: this.jwtService.sign(payload),
-            user: {
-                id: user.id,
-                username: user.username,
-                email: user.email,
-                role: user.role.name
-            }
-        };
-    }
+    const user = await this.usuariosService.createUser({
+      username: dto.username,
+      email: dto.email,
+      passwordHash,
+      roleName: RoleEnum.USER,
+    });
+    const payload = {
+      sub: user.id,
+      username: user.username,
+      role: user.role.name,
+    };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+  }
+
+  async login(dto: LoginDto) {
+    const user = await this.usuariosService.validateCredentials(
+      dto.email,
+      dto.password,
+    );
+    const payload = {
+      sub: user.id,
+      username: user.username,
+      role: user.role.name,
+    };
+    return {
+      access_token: this.jwtService.sign(payload),
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        role: user.role.name,
+      },
+    };
+  }
 }

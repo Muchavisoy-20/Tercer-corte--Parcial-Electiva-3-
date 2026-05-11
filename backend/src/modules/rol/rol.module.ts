@@ -11,6 +11,5 @@ import { Type } from 'class-transformer';
   providers: [RolService, RolSemillaService],
   controllers: [RolController],
   exports: [TypeOrmModule],
-
 })
 export class RolModule {}

@@ -6,6 +6,8 @@ import { DashboardLayout } from '../layouts/DashboardLayout';
 import { DashboardPage } from '../pages/DashboardPage';
 import { ProductsPage } from '../pages/ProductsPage';
 import { CategoriesPage } from '../pages/CategoriesPage';
+import { LogsPage } from '../pages/LogsPage';
+import { ProfilePage } from '../pages/ProfilePage';
 import { ProtectedRoute } from '../components/ProtectedRoute';
 
 export const router = createBrowserRouter([
@@ -38,6 +40,14 @@ export const router = createBrowserRouter([
           {
             path: '/categories',
             element: <CategoriesPage />,
+          },
+          {
+            path: '/history',
+            element: <LogsPage />,
+          },
+          {
+            path: '/profile',
+            element: <ProfilePage />,
           },
         ],
       },

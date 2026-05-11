@@ -119,7 +119,7 @@ export const CategoriesPage = () => {
             <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Nombre de la Categoría</label>
             <Input
               placeholder="Ej: Electrónica, Hogar..."
-              className="bg-white/5 border-white/10 text-white h-12 rounded-xl"
+              className="bg-slate-950 border-white/10 text-white h-12 rounded-xl"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               required

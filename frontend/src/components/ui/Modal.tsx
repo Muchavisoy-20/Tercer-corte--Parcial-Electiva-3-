@@ -43,7 +43,7 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 20 }}
             className={cn(
-              "relative z-50 w-full max-w-lg rounded-xl border bg-background p-6 shadow-2xl glass",
+              "relative z-50 w-full max-w-lg rounded-xl border bg-background p-6 shadow-2xl",
               className
             )}
           >

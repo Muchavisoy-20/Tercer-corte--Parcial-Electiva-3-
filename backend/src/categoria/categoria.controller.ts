@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CategoriaService } from './categoria.service';
 import { CreateCategoriaDto } from './dto/create-categoria.dto';
@@ -25,7 +34,10 @@ export class CategoriaController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCategoriaDto: UpdateCategoriaDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCategoriaDto: UpdateCategoriaDto,
+  ) {
     return this.categoriaService.update(+id, updateCategoriaDto);
   }
 

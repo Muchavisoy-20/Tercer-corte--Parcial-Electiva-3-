@@ -8,7 +8,7 @@ import { Card, CardContent } from '../components/ui/Card';
 import { Modal } from '../components/ui/Modal';
 import { Badge } from '../components/ui/Badge';
 import { Spinner } from '../components/ui/Spinner';
-import { Plus, Pencil, Trash2, Search, Image as ImageIcon, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
+import { Plus, Pencil, Trash2, Search, Image as ImageIcon, ChevronLeft, ChevronRight, Filter, Download } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 
@@ -99,6 +99,25 @@ export const ProductsPage = () => {
     }
   };
 
+  const handleExport = () => {
+    const headers = ['Nombre', 'Precio', 'Stock', 'Categoría'];
+    const csvData = productos.map(p => [
+      p.nombre,
+      p.precio,
+      p.stock,
+      p.categoriaNombre || 'Sin categoría'
+    ].join(','));
+    
+    const csvContent = [headers.join(','), ...csvData].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `inventario_${new Date().toLocaleDateString()}.csv`);
+    link.click();
+    toast.success('Inventario exportado', { description: 'El archivo CSV ha sido generado correctamente.' });
+  };
+
   const filteredProducts = productos.filter((p) => {
     const matchesSearch = p.nombre.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = categoryFilter === 'all' || p.categoriaId === Number(categoryFilter);
@@ -115,9 +134,14 @@ export const ProductsPage = () => {
           <h2 className="text-4xl font-black tracking-tighter text-white uppercase">Inventario</h2>
           <p className="text-slate-400 font-medium">Gestión avanzada de existencias y catálogo.</p>
         </div>
-        <Button onClick={() => handleOpenModal()} className="h-14 px-8 text-lg font-bold premium-gradient rounded-2xl shadow-blue-500/20 shadow-2xl hover:scale-105 active:scale-95 transition-all gap-3">
-          <Plus className="h-6 w-6" /> Nuevo Producto
-        </Button>
+        <div className="flex gap-3">
+          <Button variant="outline" onClick={handleExport} className="h-14 px-6 text-lg font-bold border-white/10 bg-white/5 hover:bg-white/10 rounded-2xl transition-all gap-3 text-white">
+            <Download className="h-6 w-6" /> Exportar
+          </Button>
+          <Button onClick={() => handleOpenModal()} className="h-14 px-8 text-lg font-bold premium-gradient rounded-2xl shadow-blue-500/20 shadow-2xl hover:scale-105 active:scale-95 transition-all gap-3">
+            <Plus className="h-6 w-6" /> Nuevo Producto
+          </Button>
+        </div>
       </div>
 
       {/* Search and Filters */}
@@ -268,7 +292,7 @@ export const ProductsPage = () => {
               <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Nombre</label>
               <Input
                 placeholder="Nombre del producto"
-                className="bg-white/5 border-white/10 text-white h-12 rounded-xl"
+                className="bg-slate-950 border-white/10 text-white h-12 rounded-xl"
                 value={formData.nombre}
                 onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
                 required
@@ -292,7 +316,7 @@ export const ProductsPage = () => {
             <div className="space-y-2">
               <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Categoría</label>
               <select 
-                className="w-full h-12 bg-white/5 border border-white/10 text-white rounded-xl px-4 focus:outline-none focus:border-blue-500"
+                className="w-full h-12 bg-slate-950 border border-white/10 text-white rounded-xl px-4 focus:outline-none focus:border-blue-500"
                 value={formData.categoriaId}
                 onChange={(e) => setFormData({ ...formData, categoriaId: Number(e.target.value) })}
                 required
@@ -308,7 +332,7 @@ export const ProductsPage = () => {
                 type="number"
                 value={formData.stock}
                 onChange={(e) => setFormData({ ...formData, stock: Number(e.target.value) })}
-                className="bg-white/5 border-white/10 text-white h-12 rounded-xl"
+                className="bg-slate-950 border-white/10 text-white h-12 rounded-xl"
                 required
               />
             </div>
@@ -328,7 +352,7 @@ export const ProductsPage = () => {
           <div className="space-y-2">
             <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Descripción</label>
             <textarea
-              className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-blue-500 min-h-[100px] transition-colors"
+              className="w-full bg-slate-950 border border-white/10 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-blue-500 min-h-[100px] transition-colors"
               value={formData.descripcion}
               onChange={(e) => setFormData({ ...formData, descripcion: e.target.value })}
               placeholder="Escribe una breve descripción del producto..."

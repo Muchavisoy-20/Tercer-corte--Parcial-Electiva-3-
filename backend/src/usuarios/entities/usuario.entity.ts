@@ -1,27 +1,34 @@
-import { Exclude } from "class-transformer";
-import { RoleEntity } from "src/modules/rol/entities/role.entitity";
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Exclude } from 'class-transformer';
+import { RoleEntity } from 'src/modules/rol/entities/role.entitity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('usuarios')
 export class UserEntity {
-    @PrimaryGeneratedColumn({ name: 'id_usuario' })
-    id: number;
+  @PrimaryGeneratedColumn({ name: 'id_usuario' })
+  id: number;
 
-    @Column({type: 'varchar', length: 100, unique: true})
-    username: string;
+  @Column({ type: 'varchar', length: 100, unique: true })
+  username: string;
 
-    @Column({type: 'varchar', length: 255, unique: true})
-    email: string;
+  @Column({ type: 'varchar', length: 255, unique: true })
+  email: string;
 
-    @Column({type: 'varchar', length: 255})
-    // 
-    @Exclude({toPlainOnly: true})
-    password: string;
-    
-    @Column()
-    roleId: number;
+  @Column({ type: 'varchar', length: 255 })
+  //
+  @Exclude({ toPlainOnly: true })
+  password: string;
 
-    @ManyToOne(() => RoleEntity, role => role.users)
-    @JoinColumn({name: 'roleId'})
-    role: RoleEntity;
+  @Column()
+  roleId: number;
+
+  @ManyToOne(() => RoleEntity, (role) => role.users)
+  @JoinColumn({ name: 'roleId' })
+  role: RoleEntity;
 }

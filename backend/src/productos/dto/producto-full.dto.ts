@@ -21,13 +21,17 @@ export class ProductoDetalleDto {
   @ApiProperty({ required: false, type: () => InventarioEntity })
   inventario?: InventarioEntity;
 
-  @ApiProperty({ description: 'Valor total en inventario calculado como precio x stock' })
+  @ApiProperty({
+    description: 'Valor total en inventario calculado como precio x stock',
+  })
   valorTotalInventario: number;
 
   @ApiProperty({ description: 'Si el producto tiene stock disponible' })
   tieneStock: boolean;
 
-  @ApiProperty({ description: 'Etatdo del nivel de stock: AGOTADO, BAJO, NORMAL' })
+  @ApiProperty({
+    description: 'Etatdo del nivel de stock: AGOTADO, BAJO, NORMAL',
+  })
   estadoStock: string;
 }
 

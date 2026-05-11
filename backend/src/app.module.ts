@@ -22,20 +22,28 @@ import { InventarioLogEntity } from './inventario/entities/inventario-log.entity
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ProductoEntity, UserEntity, RoleEntity, CategoriaEntity, InventarioEntity, InventarioLogEntity]),
+    TypeOrmModule.forFeature([
+      ProductoEntity,
+      UserEntity,
+      RoleEntity,
+      CategoriaEntity,
+      InventarioEntity,
+      InventarioLogEntity,
+    ]),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
     }),
-    ProductosModule, 
-    UsuariosModule, 
-    InventarioModule, 
-    DatabaseModule, 
-    CategoriaModule, 
-    UsuarioModule, 
-    RolModule, 
-    AuthModule],
+    ProductosModule,
+    UsuariosModule,
+    InventarioModule,
+    DatabaseModule,
+    CategoriaModule,
+    UsuarioModule,
+    RolModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService, ProductosService, SeedService],
 })
-export class AppModule { }
+export class AppModule {}

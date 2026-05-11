@@ -4,9 +4,9 @@ import { Request } from 'express';
 
 @Controller('usuarios')
 export class UsuariosController {
-    @UseGuards(JwtAuthGuard)
-    @Get('profile')
-    getProfile(@Req() req: Request) {
-        return req.user;
-    }
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Req() req: Request) {
+    return req.user;
+  }
 }
