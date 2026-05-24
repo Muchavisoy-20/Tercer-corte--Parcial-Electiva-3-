@@ -2,7 +2,7 @@
 
 Este proyecto ha evolucionado de un gestor de tareas básico a un robusto **Sistema de Gestión de Inventario (SGI)** diseñado para el control total de existencias, métricas de negocio y salud operativa.
 
-🔗 **Repositorio Oficial**: [https://github.com/PortillaVanya/Segundo-Parcial-Electiva3.git](https://github.com/PortillaVanya/Segundo-Parcial-Electiva3.git)
+🔗 **Repositorio Oficial**: [[https://github.com/PortillaVanya/Segundo-Parcial-Electiva3.git](https://github.com/PortillaVanya/Segundo-Parcial-Electiva3.git)](https://github.com/PortillaVanya/Tercer-corte--Parcial-Electiva-3-.git)
 
 ## 🚀 Justificación de la Arquitectura
 
