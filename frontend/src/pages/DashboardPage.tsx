@@ -25,11 +25,12 @@ export const DashboardPage = () => {
     );
   }
 
-  const { kpis, alertList, distribution, locationStatus } = healthMetrics || {
+  const { kpis, alertList, distribution, locationStatus, recentLogs } = healthMetrics || {
     kpis: { stockCritico: 0, agotados: 0, valorTotal: 0, categoriasActivas: 0 },
     alertList: [],
     distribution: [],
-    locationStatus: []
+    locationStatus: [],
+    recentLogs: []
   };
 
   const stats = [
@@ -175,8 +176,8 @@ export const DashboardPage = () => {
           </CardHeader>
           <CardContent className="p-0 max-h-[400px] overflow-y-auto custom-scrollbar">
             <div className="divide-y divide-white/5">
-              {healthMetrics.recentLogs?.length > 0 ? (
-                healthMetrics.recentLogs.map((log) => (
+              {recentLogs && recentLogs.length > 0 ? (
+                recentLogs.map((log: any) => (
                   <div key={log.id} className="p-6 hover:bg-white/5 transition-colors">
                     <div className="flex items-center justify-between mb-2">
                       <span className={`text-[10px] font-black px-2 py-0.5 rounded border ${

@@ -14,22 +14,27 @@ services:
 
   backend:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     container_name: nestjs_backend
     restart: always
     ports:
       - "8080:8080"
-    environment:
-      PORT: 8080
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_USERNAME: root
-      DB_PASSWORD: root
-      DB_DATABASE: tienda_virtual
-      JWT_SECRET: clave_secreta_para_desarrollo_123
+    env_file:
+      - ./backend/.env
     depends_on:
       - db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: react_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
 
 volumes:
   mysql_data:

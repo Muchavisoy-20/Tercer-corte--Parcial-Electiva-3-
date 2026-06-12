@@ -14,17 +14,17 @@ FROM node:24-alpine AS production
 
 WORKDIR /app
 
-# Asignar permisos al usuario node antes de cambiar a el
-RUN chown -R node:node /app
+# Instalar un servidor estático simple
+RUN npm install -g serve
 
-COPY package*.json ./
-RUN npm ci --omit=dev
+# Asignar permisos al usuario node
+RUN chown -R node:node /app
 
 COPY --from=builder /app/dist ./dist
 
 # Cambiar a usuario no-root seguro
 USER node
 
-EXPOSE 8080
+EXPOSE 3000
 
-CMD ["node", "dist/main.js"]
+CMD ["serve", "-s", "dist", "-l", "3000"]

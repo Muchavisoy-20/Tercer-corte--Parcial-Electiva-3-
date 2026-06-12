@@ -1,0 +1,46 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout del código
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '24'
+
+    # Backend
+    - name: Instalar dependencias Backend
+      run: cd backend && npm ci
+
+    - name: Linter Backend
+      run: cd backend && npm run lint
+
+    - name: Build Backend
+      run: cd backend && npm run build
+
+    # Frontend
+    - name: Instalar dependencias Frontend
+      run: cd frontend && npm ci
+
+    - name: Build Frontend
+      run: cd frontend && npm run build
+
+  deploy:
+    needs: build-and-lint
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+    - name: Deploy to Render
+      run: |
+        curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}

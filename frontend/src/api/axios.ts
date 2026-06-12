@@ -16,6 +16,9 @@ api.interceptors.response.use(
       // Redirect to login if unauthorized
       window.location.href = '/login';
     }
+    if (error.response?.status === 403) {
+      alert('Error 403: No tienes permisos suficientes sobre este recurso.');
+    }
     return Promise.reject(error);
   }
 );
