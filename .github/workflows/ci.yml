@@ -12,10 +12,10 @@ jobs:
     
     steps:
     - name: Checkout del código
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: '24'
 
@@ -41,6 +41,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
-    - name: Deploy to Render
+    - name: Check secret and Deploy to Render
       run: |
-        curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        if [ -z "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" ]; then
+          echo "ERROR: El secreto RENDER_DEPLOY_HOOK_URL no está configurado en GitHub."
+          exit 1
+        fi
+        curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
