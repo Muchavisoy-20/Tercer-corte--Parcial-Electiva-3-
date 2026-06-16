@@ -4,7 +4,6 @@ import { RolController } from './rol.controller';
 import { RoleEntity } from './entities/role.entitity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RolSemillaService } from './rol-semilla.service';
-import { Type } from 'class-transformer';
 
 @Module({
   imports: [TypeOrmModule.forFeature([RoleEntity])],

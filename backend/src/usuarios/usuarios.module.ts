@@ -1,7 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { UsuariosController } from './usuarios.controller';
 import { UsuariosService } from './usuarios.service';
-import { Type } from 'class-transformer';
 import { UserEntity } from './entities/usuario.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';

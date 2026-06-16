@@ -32,17 +32,17 @@ export class SeedService implements OnModuleInit {
 
     // 1. Crear Roles
     let adminRole = await this.roleRepository.findOne({
-      where: { name: 'admin' as any },
+      where: { name: 'admin' },
     });
     if (!adminRole) {
-      adminRole = await this.roleRepository.save({ name: 'admin' as any });
+      adminRole = await this.roleRepository.save({ name: 'admin' });
     }
 
     let userRole = await this.roleRepository.findOne({
-      where: { name: 'user' as any },
+      where: { name: 'user' },
     });
     if (!userRole) {
-      userRole = await this.roleRepository.save({ name: 'user' as any });
+      userRole = await this.roleRepository.save({ name: 'user' });
     }
 
     // 2. Crear Usuario Admin
@@ -339,7 +339,7 @@ export class SeedService implements OnModuleInit {
         const inventario = this.inventarioRepository.create({
           stock: p.stock,
           stockMinimo: p.stockMinimo,
-          ubicacion: p.ubicacion as any,
+          ubicacion: p.ubicacion,
           producto: savedProduct,
         });
         await this.inventarioRepository.save(inventario);

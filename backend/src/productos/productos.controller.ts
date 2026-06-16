@@ -14,7 +14,6 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ProductosService } from './productos.service';
 import { CreateProductDto } from './dto/create-product.dto';
-import { ProductoFullResponseDto } from './dto/producto-full.dto';
 
 @ApiTags('productos')
 @Controller('productos')

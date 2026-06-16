@@ -186,7 +186,9 @@ export class ProductosService {
       if (producto.inventario) {
         producto.inventario.stock = updateProductDto.stock;
       } else {
-        producto.inventario = { stock: updateProductDto.stock } as any;
+        producto.inventario = {
+          stock: updateProductDto.stock,
+        } as import('src/inventario/entities/inventario.entity').InventarioEntity;
       }
 
       if (diff !== 0) {
@@ -213,6 +215,7 @@ export class ProductosService {
     const productos = await this.productoRepository.find({
       relations: ['categorias', 'inventario'],
     });
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const categorias = await this.productoRepository.query(
       'SELECT * FROM categorias',
     );
@@ -229,7 +232,7 @@ export class ProductosService {
     );
 
     // Distribution by category
-    const distribution = {};
+    const distribution: Record<string, number> = {};
     productos.forEach((p) => {
       const catName = p.categorias?.nombre || 'Sin categoría';
       distribution[catName] = (distribution[catName] || 0) + 1;
@@ -241,7 +244,7 @@ export class ProductosService {
     }));
 
     // Location status
-    const locationStats = {};
+    const locationStats: Record<string, number> = {};
     productos.forEach((p) => {
       const loc = p.inventario?.ubicacion || 'Bodega A';
       locationStats[loc] =
@@ -264,6 +267,7 @@ export class ProductosService {
         stockCritico: stockCritico.length,
         agotados: agotados.length,
         valorTotal,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         categoriasActivas: categorias.length,
       },
       alertList: stockCritico.concat(agotados).map((p) => ({
